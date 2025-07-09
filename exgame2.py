@@ -1,4 +1,3 @@
-
 grocery = {
     'bread': 10,
     'cheese': 15,
@@ -48,6 +47,134 @@ pet_shop = {
     'serpent': 500
 }
 
+
+village_quests = {
+    'hunt wild boar': {'reward': 150, 'description': 'A wild boar terrorizes the fields!'},
+    'deliver message to next village': {'reward': 80, 'description': 'Urgent message needs delivery!'},
+    'find lost sheep': {'reward': 60, 'description': 'Farmer Johann lost his prize sheep!'},
+    'escort merchant caravan': {'reward': 200, 'description': 'Dangerous roads need protection!'},
+    'gather rare herbs': {'reward': 120, 'description': 'Village healer needs mystical herbs!'},
+    'repair village well': {'reward': 100, 'description': 'Well broken, villagers thirsty!'},
+    'catch pickpocket': {'reward': 180, 'description': 'Thief stealing from market stalls!'},
+    'explore haunted ruins': {'reward': 300, 'description': 'Ancient ruins hold treasure... and danger!'},
+    'tame wild horse': {'reward': 250, 'description': 'Magnificent stallion roams the plains!'},
+    'brew healing elixir': {'reward': 140, 'description': 'Village plagued by mysterious illness!'}
+}
+
+blacksmith_jobs = {
+    'sharpen village weapons': {'reward': 90, 'description': 'Village guard needs weapon maintenance!'},
+    'forge horseshoes': {'reward': 50, 'description': 'Stable master needs quality horseshoes!'},
+    'repair armor': {'reward': 70, 'description': 'Damaged armor from last skirmish!'},
+    'craft ceremonial sword': {'reward': 200, 'description': 'Noble wedding needs special blade!'}
+}
+
+tavern_activities = {
+    'arm wrestling contest': {'reward': 75, 'description': 'Test your strength against locals!'},
+    'storytelling night': {'reward': 50, 'description': 'Entertain patrons with epic tales!'},
+    'drinking contest': {'reward': 40, 'description': 'Last one standing wins the pot!'},
+    'solve riddle challenge': {'reward': 85, 'description': 'Old sage poses mysterious riddles!'},
+    'bard performance': {'reward': 65, 'description': 'Play music for coin and glory!'}
+}
+
+
+import random
+random_events = [
+    {'event': 'You find a purse dropped by a merchant!', 'gold': 45},
+    {'event': 'A grateful villager tips you for your heroic reputation!', 'gold': 30},
+    {'event': 'You discover ancient coins while walking!', 'gold': 80},
+    {'event': 'A mysterious stranger pays you for information!', 'gold': 60},
+    {'event': 'You help catch a runaway pig and get rewarded!', 'gold': 25},
+    {'event': 'You find treasure in an old barrel!', 'gold': 95},
+    {'event': 'A noble appreciates your service to the village!', 'gold': 120}
+]
+
+completed_quests = []
+
+def show_quest_board():
+    print("\n=== VILLAGE QUEST & BOUNTY BOARD ===")
+    print("Available Village Quests:")
+    for i, (quest, details) in enumerate(village_quests.items(), 1):
+        if quest not in completed_quests:
+            print(f"{i}. {quest.title()} - {details['description']} [Reward: {details['reward']} gold]")
+    
+    print("\nBlacksmith Jobs:")
+    for i, (job, details) in enumerate(blacksmith_jobs.items(), 1):
+        if job not in completed_quests:
+            print(f"b{i}. {job.title()} - {details['description']} [Reward: {details['reward']} gold]")
+    
+    print("\nTavern Activities:")
+    for i, (activity, details) in enumerate(tavern_activities.items(), 1):
+        if activity not in completed_quests:
+            print(f"t{i}. {activity.title()} - {details['description']} [Reward: {details['reward']} gold]")
+    
+    print("\nPress 'r' for random adventure, 'back' to return to shops")
+
+def handle_quest_selection(choice, gold):
+    if choice == 'r':
+        # Random adventure event
+        event = random.choice(random_events)
+        print(f"\n{event['event']}")
+        gold += event['gold']
+        print(f"You gained {event['gold']} gold!")
+        return gold
+    elif choice == 'back':
+        return gold
+    elif choice.startswith('b'):
+        # Blacksmith job
+        try:
+            job_num = int(choice[1:]) - 1
+            job_list = list(blacksmith_jobs.items())
+            if 0 <= job_num < len(job_list):
+                job_name, details = job_list[job_num]
+                if job_name not in completed_quests:
+                    print(f"\nYou completed: {job_name.title()}!")
+                    print(f"The blacksmith says: 'Excellent work, here's your payment!'")
+                    gold += details['reward']
+                    completed_quests.append(job_name)
+                    print(f"You earned {details['reward']} gold!")
+                else:
+                    print("Quest already completed!")
+        except (ValueError, IndexError):
+            print("Invalid job selection!")
+    elif choice.startswith('t'):
+        # Tavern activity
+        try:
+            activity_num = int(choice[1:]) - 1
+            activity_list = list(tavern_activities.items())
+            if 0 <= activity_num < len(activity_list):
+                activity_name, details = activity_list[activity_num]
+                if activity_name not in completed_quests:
+                    print(f"\nYou participated in: {activity_name.title()}!")
+                    print(f"The tavern keeper cheers: 'Well done, here's your winnings!'")
+                    gold += details['reward']
+                    completed_quests.append(activity_name)
+                    print(f"You earned {details['reward']} gold!")
+                else:
+                    print("Activity already completed!")
+        except (ValueError, IndexError):
+            print("Invalid activity selection!")
+    else:
+        # Village quest
+        try:
+            quest_num = int(choice) - 1
+            quest_list = list(village_quests.items())
+            if 0 <= quest_num < len(quest_list):
+                quest_name, details = quest_list[quest_num]
+                if quest_name not in completed_quests:
+                    print(f"\nYou completed the quest: {quest_name.title()}!")
+                    print(f"The village elder says: 'You've done us a great service!'")
+                    gold += details['reward']
+                    completed_quests.append(quest_name)
+                    print(f"You earned {details['reward']} gold!")
+                else:
+                    print("Quest already completed!")
+            else:
+                print("Invalid quest number!")
+        except ValueError:
+            print("Invalid input! Please enter a number.")
+    
+    return gold
+
 stores = [ 
 '1-Freelancers', 
 '2-Antiques', 
@@ -55,6 +182,7 @@ stores = [
 '4-Grocery', 
 '5-Botanical Nursery', 
 '6-Farmers Market',
+'7-Quest & Bounty Board'
 ]
 o1=['1-attacke ze germanz', 
     '2-run away from the village',
@@ -90,12 +218,21 @@ if (game_stat=="y"):
                 while True:
                     print(f"""THE SHOPS YOU SEE ARE:
                     {stores}
-                    WHICH SHOP WILL YOU VISIT?(1,2,3,4,5,6) or '//' to go back """)
+                    WHICH SHOP WILL YOU VISIT?(1,2,3,4,5,6,7) or '//' to go back """)
                     shop_usin3=input()
                     
                     if shop_usin3 == '//':
                         break
-                       
+                    
+                    elif shop_usin3 == '7':
+                        while True:
+                            show_quest_board()
+                            quest_choice = input("\nChoose a quest/job/activity (number), 'r' for random adventure, or 'back' to return: ")
+                            if quest_choice == 'back':
+                                break
+                            gold = handle_quest_selection(quest_choice, gold)
+                            print(f"\nYour current gold: {gold}")
+                            input("Press Enter to continue...")
                         
                     elif (shop_usin3=='1'):
                         print(f"""{freelancers}
