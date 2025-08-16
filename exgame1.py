@@ -1,4 +1,3 @@
-
 grocery = {
     'bread': 10,
     'cheese': 15,
@@ -203,19 +202,10 @@ if (game_stat=="y"):
                             GOD LIKES BALANCE,
                             GOD LOVES TO PLAY GOD,
                             god used 'BRIGT EYE'!
-                                       _ . - = - . _
-      
-     
-         _,.--~=~"~=~--.._  
-     _.-"  / \ !   ! / \  "-._  
-   ,"     / ,` .---. `, \     ". 
-/.'   `~  |   /:::::\   |  ~`   '.
-\`.  `~   |   \:::::/   | ~`  ~ .'
-  `.  `~  \ `, `~~~' ,` /   ~`.' 
-    "-._   \ / !   ! \ /  _.-"  
-       "=~~.._  _..~~=`"    
+                            
+                            PIC
 
-                                   
+
                             You have recived the blessing of god(2)
                             You have defeated ze germanz
                             YOU WON!Thanks for playing!!
